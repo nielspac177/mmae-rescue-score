@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>MMA Embolization Rescue Risk Score</title>
+<meta name="description" content="Pre-procedural risk score for rescue surgery after middle meningeal artery embolization for chronic subdural hematoma.">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="hero">
+  <div class="container">
+    <p class="eyebrow">Clinical decision support · Neurointervention</p>
+    <h1>MMA Embolization Rescue Risk Score</h1>
+    <p class="lede">Pre-procedural risk of rescue surgery after middle meningeal artery embolization for chronic subdural hematoma. Validated in 214 consecutive patients (36 rescue events).</p>
+    <div class="metrics">
+      <div class="metric"><span class="big">0.73</span><span class="label">AUC, optimism-corrected</span></div>
+      <div class="metric"><span class="big">4.7×</span><span class="label">High vs low risk (≥5)</span></div>
+      <div class="metric"><span class="big">214</span><span class="label">Patients · 36 events</span></div>
+    </div>
+    <nav class="cta">
+      <a href="#calculator" class="btn primary">Open calculator</a>
+      <a href="#manuscript" class="btn">Read manuscript</a>
+      <a href="bedside_card.pdf" class="btn">Download bedside card</a>
+    </nav>
+  </div>
+</header>
+
+<!-- =================== CALCULATOR =================== -->
+<section id="calculator" class="section">
+  <div class="container">
+    <h2>Risk calculator</h2>
+    <p class="muted">Enter the patient's pre-procedural variables. The calculator returns the probability of post-embolization rescue surgery from the multivariable logistic regression that underpins Model 1 (full, 8-point) and Model 2 (simple, 5-point). All computation happens locally in your browser.</p>
+
+    <div class="calc">
+      <div class="calc-form">
+        <fieldset>
+          <legend>Demographics</legend>
+          <label>Age
+            <select id="age">
+              <option value="0">&lt; 65 years (0 pts)</option>
+              <option value="1" selected>65–80 years (1 pt)</option>
+              <option value="2">&gt; 80 years (2 pts)</option>
+            </select>
+          </label>
+        </fieldset>
+
+        <fieldset>
+          <legend>Imaging</legend>
+          <label class="check"><input type="checkbox" id="sdh_vol_ge100"> SDH volume ≥ 100 mL <span class="pt">+1</span></label>
+        </fieldset>
+
+        <fieldset>
+          <legend>Comorbidities &amp; medications</legend>
+          <label class="check"><input type="checkbox" id="anticoag"> Anticoagulation <span class="pt">+1</span></label>
+          <label class="check"><input type="checkbox" id="antiplatelet"> Antiplatelet therapy <span class="pt">+1</span></label>
+        </fieldset>
+
+        <fieldset>
+          <legend>Clinical presentation</legend>
+          <label class="check"><input type="checkbox" id="no_focal_deficit"> No focal neurological deficit <span class="pt">+1</span></label>
+        </fieldset>
+
+        <fieldset>
+          <legend>Laboratory</legend>
+          <label class="check"><input type="checkbox" id="plt_lt150"> Platelets &lt; 150 ×10⁹/L <span class="pt">+1</span></label>
+        </fieldset>
+
+        <fieldset>
+          <legend>Procedural plan</legend>
+          <label class="check"><input type="checkbox" id="ant_post"> Embolize anterior + posterior branches <span class="pt">+1</span></label>
+        </fieldset>
+
+        <fieldset>
+          <legend>Score model</legend>
+          <label><input type="radio" name="model" value="m1" checked> <b>Model 1</b> — full 8-point</label>
+          <label><input type="radio" name="model" value="m2"> <b>Model 2</b> — simple 5-point</label>
+        </fieldset>
+
+        <button id="reset" class="btn outline">Reset</button>
+      </div>
+
+      <div class="calc-result">
+        <h3>Result</h3>
+        <div class="big-score">
+          <span id="total_pts">2</span>
+          <span class="of">/ <span id="max_pts">8</span> pts</span>
+        </div>
+        <div class="prob-block">
+          <div class="prob-bar"><div id="prob_fill"></div></div>
+          <div class="prob-label">
+            Predicted probability of rescue surgery:
+            <span id="prob_pct" class="prob-num">—</span>
+          </div>
+        </div>
+        <div id="risk_band" class="band low">Low risk</div>
+        <div class="lookup">
+          <h4>Observed rate at this score (cohort, n=214)</h4>
+          <p id="obs_rate" class="muted">—</p>
+        </div>
+        <div id="action_box" class="action">
+          <h4>Suggested management</h4>
+          <p id="action_text">Follow standard post-embolization surveillance.</p>
+        </div>
+      </div>
+    </div>
+
+    <details class="caveat">
+      <summary>Important caveats</summary>
+      <ul>
+        <li>Single-center retrospective derivation; <b>external validation pending</b>.</li>
+        <li>The score complements clinical judgment — it does not replace it.</li>
+        <li>Designed for <b>pre-procedural</b> risk estimation, not for triage of acute SDH.</li>
+        <li>Operating-point cutoffs (≥5 for Model 1, ≥4 for Model 2) were chosen for clinical interpretability, not to maximize Youden's J.</li>
+      </ul>
+    </details>
+  </div>
+</section>
+
+<!-- =================== TABLE =================== -->
+<section id="lookup" class="section alt">
+  <div class="container">
+    <h2>Score → observed rescue rate</h2>
+    <p class="muted">Wilson 95% confidence intervals from the derivation cohort.</p>
+
+    <div class="table-grid">
+      <div>
+        <h3>Model 1 (full, max 8)</h3>
+        <table class="data">
+          <thead><tr><th>Score</th><th>n</th><th>Failures</th><th>Rate</th><th>95% CI</th></tr></thead>
+          <tbody>
+            <tr><td>0</td><td>1</td><td>0</td><td>0.0%</td><td>0–79.3</td></tr>
+            <tr><td>1</td><td>11</td><td>1</td><td>9.1%</td><td>1.6–37.7</td></tr>
+            <tr><td>2</td><td>38</td><td>3</td><td>7.9%</td><td>2.7–20.8</td></tr>
+            <tr><td>3</td><td>56</td><td>4</td><td>7.1%</td><td>2.8–17.0</td></tr>
+            <tr><td>4</td><td>59</td><td>7</td><td>11.9%</td><td>5.9–22.5</td></tr>
+            <tr class="hi"><td>5</td><td>38</td><td>16</td><td>42.1%</td><td>27.9–57.8</td></tr>
+            <tr class="hi"><td>6</td><td>8</td><td>3</td><td>37.5%</td><td>13.7–69.4</td></tr>
+            <tr class="hi"><td>7</td><td>3</td><td>2</td><td>66.7%</td><td>20.8–93.9</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div>
+        <h3>Model 2 (simple, max 5)</h3>
+        <table class="data">
+          <thead><tr><th>Score</th><th>n</th><th>Failures</th><th>Rate</th><th>95% CI</th></tr></thead>
+          <tbody>
+            <tr><td>0</td><td>6</td><td>1</td><td>16.7%</td><td>3.0–56.4</td></tr>
+            <tr><td>1</td><td>35</td><td>1</td><td>2.9%</td><td>0.5–14.5</td></tr>
+            <tr><td>2</td><td>74</td><td>9</td><td>12.2%</td><td>6.5–21.5</td></tr>
+            <tr><td>3</td><td>69</td><td>14</td><td>20.3%</td><td>12.5–31.2</td></tr>
+            <tr class="hi"><td>4</td><td>27</td><td>9</td><td>33.3%</td><td>18.6–52.2</td></tr>
+            <tr class="hi"><td>5</td><td>3</td><td>2</td><td>66.7%</td><td>20.8–93.9</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =================== FIGURES =================== -->
+<section id="figures" class="section">
+  <div class="container">
+    <h2>Key figures</h2>
+    <div class="fig">
+      <img src="figures/fig0_study_flow.png" alt="Study flow diagram">
+      <p class="figcap"><b>Figure 1.</b> Study flow and analytic schema.</p>
+    </div>
+    <div class="fig">
+      <img src="figures/fig1_roc.png" alt="ROC curves">
+      <p class="figcap"><b>Figure 2.</b> Receiver operating characteristic curves for Model 1 and Model 2.</p>
+    </div>
+    <div class="fig">
+      <img src="figures/fig2_score_risk.png" alt="Score → risk">
+      <p class="figcap"><b>Figure 3.</b> Observed rescue rate by total score with Wilson 95% CIs.</p>
+    </div>
+    <div class="fig">
+      <img src="figures/fig4_forest.png" alt="Forest plot of OR">
+      <p class="figcap"><b>Figure 4.</b> Univariable logistic-regression odds ratios (95% CI).</p>
+    </div>
+    <div class="fig">
+      <img src="figures/fig3_calibration.png" alt="Calibration">
+      <p class="figcap"><b>Figure 5.</b> Calibration — predicted vs. observed proportion.</p>
+    </div>
+    <div class="fig">
+      <img src="figures/fig6_decision_threshold.png" alt="Decision threshold">
+      <p class="figcap"><b>Figure 6.</b> Bedside-friendly dichotomized score thresholds.</p>
+    </div>
+    <div class="fig">
+      <img src="figures/fig9_nomogram.png" alt="Nomogram">
+      <p class="figcap"><b>Figure 7.</b> Model 1 Harrell-style nomogram (multivariable logistic regression). Read points for each predictor, sum, and read predicted probability on the bottom axis.</p>
+    </div>
+    <div class="fig">
+      <img src="figures/fig7_ml_roc.png" alt="ML ROC">
+      <p class="figcap"><b>Figure 8.</b> Machine-learning comparison — ROC curves. The integer Model-1 score (AUC 0.734) outperforms random forest, gradient boosting, and XGBoost at this event count.</p>
+    </div>
+    <div class="fig">
+      <img src="figures/fig8_ml_bars.png" alt="ML AUC bars">
+      <p class="figcap"><b>Figure 9.</b> Cross-validated AUC across all six models with 1000-bootstrap 95% CIs.</p>
+    </div>
+    <div class="fig">
+      <img src="figures/fig10_dca.png" alt="Decision curve analysis">
+      <p class="figcap"><b>Figure 10.</b> Decision curve analysis — net benefit vs threshold probability. Model 1 dominates Model 2, treat-all, and treat-none across the clinical range (10–40%).</p>
+    </div>
+  </div>
+</section>
+
+<!-- =================== MANUSCRIPT =================== -->
+<section id="manuscript" class="section alt">
+  <div class="container">
+    <h2>Manuscript</h2>
+    <p>The full IMRAD manuscript with 30 references, Table 1, and the complete results is available as Word and HTML.</p>
+    <ul class="downloads">
+      <li><a href="REPORT_v2.docx">📄 REPORT_v2.docx</a> — Word manuscript (2.4 MB)</li>
+      <li><a href="REPORT_v2.html">🌐 REPORT_v2.html</a> — full HTML report</li>
+      <li><a href="supp_tables.xlsx">📊 supp_tables.xlsx</a> — supplementary tables (9 sheets)</li>
+      <li><a href="figures_tiff.zip">🗜 figures_tiff.zip</a> — 600 DPI TIFF figures</li>
+      <li><a href="bedside_card.pdf">🪪 bedside_card.pdf</a> — printable bedside risk card</li>
+    </ul>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <p>Pre-procedural risk score for rescue surgery after MMA embolization for cSDH. Internal validation only — external validation pending. © <span id="year"></span>. Code and data: <a href="https://github.com/" target="_blank">GitHub repo</a>.</p>
+  </div>
+</footer>
+
+<script src="calculator.js"></script>
+</body>
+</html>
