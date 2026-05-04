@@ -73,7 +73,7 @@
       <label><input type="radio" name="model" value="m1" checked>
         <span><b>Model 1</b> · Full · 8 pts</span></label>
       <label><input type="radio" name="model" value="m3">
-        <span><b>Model 3</b> · SOCR · 6 pts</span></label>
+        <span><b>Model 3</b> · 6 pts</span></label>
       <label><input type="radio" name="model" value="m2">
         <span><b>Model 2</b> · Simple · 5 pts</span></label>
     </div>
@@ -201,7 +201,7 @@
         </table>
       </div>
       <div class="card">
-        <h3 class="t-purple">Model 3 — SOCR (max 6)</h3>
+        <h3 class="t-purple">Model 3 (max 6)</h3>
         <table class="data">
           <thead><tr><th>Score</th><th>n</th><th>Failures</th><th>Rate</th><th>95% CI</th></tr></thead>
           <tbody>
@@ -243,16 +243,16 @@
     <p>Three pre-procedural integer scores are available:</p>
     <div class="model-cards">
       <div class="model-card t-blue">
-        <h4>Model 1 · Full</h4>
-        <p>7 variables, max 8 pts. Adds anticoagulation and bilateral embolization to the SOCR variables. <b>AUC 0.732</b> (optimism-corrected).</p>
+        <h4>Model 1 — Full (8 pts)</h4>
+        <p>Seven variables including anticoagulation and anterior + posterior embolization. <b>AUC 0.732</b> (optimism-corrected). Best discrimination at the high-risk end.</p>
       </div>
       <div class="model-card t-purple">
-        <h4>Model 3 · SOCR</h4>
-        <p>5 variables, max 6 pts. Co-author parallel derivation. <b>AUC 0.724</b>. Different age cutoff (&gt;85 instead of &gt;80).</p>
+        <h4>Model 3 (6 pts)</h4>
+        <p>Five variables — drops anticoagulation and the procedural variable, age stratified at <b>&gt;85</b> instead of <b>&gt;80</b>. <b>AUC 0.724</b>. Useful when the procedural plan is not yet decided.</p>
       </div>
       <div class="model-card t-gold">
-        <h4>Model 2 · Simple</h4>
-        <p>4 variables, max 5 pts. Bedside-only — no labs, no procedural plan needed. <b>AUC 0.681</b>.</p>
+        <h4>Model 2 — Simple (5 pts)</h4>
+        <p>Four variables. No laboratory values, no procedural plan needed. <b>AUC 0.681</b>. Designed for triage where lab data may be unavailable.</p>
       </div>
     </div>
     <p>All three are calibrated across deciles of predicted probability (Hosmer–Lemeshow P > 0.5), so the absolute risk numbers can be used directly. The integer scores outperform random forest, gradient boosting, and XGBoost trained on the same inputs at this event count.</p>
