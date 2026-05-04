@@ -11,10 +11,7 @@ This folder is the static GitHub Pages site for the MMA embolization rescue risk
 | `calculator.js` | Pure-JS calculator logic and observed-rate lookup |
 | `figures/` | Figures 1–6 (PNG) used on the page |
 | `bedside_card.pdf` | Printable 1-page bedside card |
-| `REPORT_v2.docx` | Full IMRAD manuscript (Word) |
-| `REPORT_v2.html` | Full HTML report |
-| `supp_tables.xlsx` | 9-sheet supplementary tables |
-| `figures_tiff.zip` | 600 DPI TIFF figures for submission |
+
 
 ## How to deploy on GitHub Pages
 
