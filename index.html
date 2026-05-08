@@ -55,8 +55,8 @@
     <aside class="hero-stats">
       <div class="stat"><span class="stat-num">214</span><span class="stat-label">patients</span></div>
       <div class="stat"><span class="stat-num">36</span><span class="stat-label">rescue events</span></div>
-      <div class="stat accent"><span class="stat-num">0.69</span><span class="stat-label">AUC (Model 1)</span></div>
-      <div class="stat danger"><span class="stat-num">3.7×</span><span class="stat-label">high vs low risk</span></div>
+      <div class="stat accent"><span class="stat-num">0.70</span><span class="stat-label">AUC (Model 1)</span></div>
+      <div class="stat danger"><span class="stat-num">4.2×</span><span class="stat-label">high vs low risk</span></div>
     </aside>
   </div>
 </section>
@@ -71,13 +71,19 @@
 
     <div class="model-toggle">
       <label><input type="radio" name="model" value="m1" checked>
-        <span><b>Model 1</b> · Full · 8 pts</span></label>
-      <label><input type="radio" name="model" value="m3">
-        <span><b>Model 3</b> · 6 pts</span></label>
+        <span><b>Model 1</b> · Full · 7 pts <em>(primary)</em></span></label>
       <label><input type="radio" name="model" value="m2">
-        <span><b>Model 2</b> · Simple · 5 pts</span></label>
+        <span><b>Model 2</b> · Simple · 4 pts <em>(primary)</em></span></label>
+      <label><input type="radio" name="model" value="m3">
+        <span><b>Model 3</b> · 5 pts <em>(sensitivity)</em></span></label>
       <label><input type="radio" name="model" value="m4">
-        <span><b>Model 4</b> · Data-driven</span></label>
+        <span><b>Model 4</b> · Data-driven <em>(sensitivity)</em></span></label>
+    </div>
+    <div id="focal_sens_row" class="focal-sens">
+      <label class="check-inline">
+        <input type="checkbox" id="focal_sens">
+        <span>Sensitivity sub-analysis: include focal deficit (data-correction variant)</span>
+      </label>
     </div>
 
     <div class="calc-grid">
@@ -191,46 +197,44 @@
 
     <div class="table-grid">
       <div class="card">
-        <h3 class="t-blue">Model 1 — Full (max 8)</h3>
+        <h3 class="t-blue">Model 1 — Full (max 7) <em class="muted">primary</em></h3>
         <table class="data">
           <thead><tr><th>Score</th><th>n</th><th>Failures</th><th>Rate</th><th>95% CI</th></tr></thead>
           <tbody>
-            <tr><td>0</td><td>6</td><td>0</td><td>0.0%</td><td>0.0–39.0</td></tr>
-            <tr><td>1</td><td>20</td><td>3</td><td>15.0%</td><td>5.2–36.0</td></tr>
-            <tr><td>2</td><td>31</td><td>3</td><td>9.7%</td><td>3.3–24.9</td></tr>
-            <tr><td>3</td><td>53</td><td>3</td><td>5.7%</td><td>1.9–15.4</td></tr>
-            <tr><td>4</td><td>54</td><td>8</td><td>14.8%</td><td>7.7–26.6</td></tr>
-            <tr class="hi"><td>5</td><td>39</td><td>16</td><td>41.0%</td><td>27.1–56.6</td></tr>
-            <tr class="hi"><td>6</td><td>9</td><td>2</td><td>22.2%</td><td>6.3–54.7</td></tr>
-            <tr class="hi"><td>7</td><td>2</td><td>1</td><td>50.0%</td><td>9.5–90.5</td></tr>
+            <tr><td>0</td><td>8</td><td>0</td><td>0.0%</td><td>0.0–32.4</td></tr>
+            <tr><td>1</td><td>29</td><td>4</td><td>13.8%</td><td>5.5–30.6</td></tr>
+            <tr><td>2</td><td>50</td><td>3</td><td>6.0%</td><td>2.1–16.2</td></tr>
+            <tr><td>3</td><td>64</td><td>6</td><td>9.4%</td><td>4.4–19.0</td></tr>
+            <tr class="hi"><td>4</td><td>47</td><td>18</td><td>38.3%</td><td>25.8–52.6</td></tr>
+            <tr class="hi"><td>5</td><td>13</td><td>3</td><td>23.1%</td><td>8.2–50.3</td></tr>
+            <tr class="hi"><td>6</td><td>3</td><td>2</td><td>66.7%</td><td>20.8–93.9</td></tr>
           </tbody>
         </table>
       </div>
       <div class="card">
-        <h3 class="t-purple">Model 3 (max 6)</h3>
+        <h3 class="t-gold">Model 2 — Simple (max 4) <em class="muted">primary</em></h3>
         <table class="data">
           <thead><tr><th>Score</th><th>n</th><th>Failures</th><th>Rate</th><th>95% CI</th></tr></thead>
           <tbody>
-            <tr><td>0</td><td>13</td><td>2</td><td>15.4%</td><td>4.3–42.2</td></tr>
-            <tr><td>1</td><td>36</td><td>4</td><td>11.1%</td><td>4.4–25.3</td></tr>
-            <tr><td>2</td><td>67</td><td>4</td><td>6.0%</td><td>2.3–14.4</td></tr>
-            <tr><td>3</td><td>50</td><td>8</td><td>16.0%</td><td>8.3–28.5</td></tr>
-            <tr class="hi"><td>4</td><td>35</td><td>14</td><td>40.0%</td><td>25.6–56.4</td></tr>
-            <tr class="hi"><td>5</td><td>13</td><td>4</td><td>30.8%</td><td>12.7–57.6</td></tr>
+            <tr><td>0</td><td>29</td><td>2</td><td>6.9%</td><td>1.9–22.0</td></tr>
+            <tr><td>1</td><td>61</td><td>8</td><td>13.1%</td><td>6.8–23.8</td></tr>
+            <tr><td>2</td><td>83</td><td>13</td><td>15.7%</td><td>9.4–25.0</td></tr>
+            <tr class="hi"><td>3</td><td>36</td><td>11</td><td>30.6%</td><td>18.0–46.9</td></tr>
+            <tr class="hi"><td>4</td><td>5</td><td>2</td><td>40.0%</td><td>11.8–76.9</td></tr>
           </tbody>
         </table>
       </div>
       <div class="card">
-        <h3 class="t-gold">Model 2 — Simple (max 5)</h3>
+        <h3 class="t-purple">Model 3 (max 5) <em class="muted">sensitivity</em></h3>
         <table class="data">
           <thead><tr><th>Score</th><th>n</th><th>Failures</th><th>Rate</th><th>95% CI</th></tr></thead>
           <tbody>
-            <tr><td>0</td><td>17</td><td>1</td><td>5.9%</td><td>1.0–27.0</td></tr>
-            <tr><td>1</td><td>39</td><td>6</td><td>15.4%</td><td>7.2–29.7</td></tr>
-            <tr><td>2</td><td>63</td><td>6</td><td>9.5%</td><td>4.4–19.3</td></tr>
-            <tr class="hi"><td>3</td><td>67</td><td>15</td><td>22.4%</td><td>14.1–33.7</td></tr>
-            <tr class="hi"><td>4</td><td>23</td><td>6</td><td>26.1%</td><td>12.5–46.5</td></tr>
-            <tr class="hi"><td>5</td><td>5</td><td>2</td><td>40.0%</td><td>11.8–76.9</td></tr>
+            <tr><td>0</td><td>22</td><td>3</td><td>13.6%</td><td>4.7–33.3</td></tr>
+            <tr><td>1</td><td>64</td><td>4</td><td>6.3%</td><td>2.5–15.0</td></tr>
+            <tr><td>2</td><td>70</td><td>7</td><td>10.0%</td><td>4.9–19.2</td></tr>
+            <tr class="hi"><td>3</td><td>40</td><td>17</td><td>42.5%</td><td>28.5–57.8</td></tr>
+            <tr class="hi"><td>4</td><td>17</td><td>4</td><td>23.5%</td><td>9.6–47.3</td></tr>
+            <tr class="hi"><td>5</td><td>1</td><td>1</td><td>100%</td><td>20.7–100</td></tr>
           </tbody>
         </table>
       </div>
@@ -245,27 +249,34 @@
       <h2>About the score</h2>
     </header>
     <p>The score estimates the probability that a patient undergoing middle meningeal artery (MMA) embolization for chronic subdural hematoma will go on to require rescue surgery (open burr-hole evacuation or craniotomy) after the index procedure.</p>
-    <p>Four pre-procedural models are available — three integer scores and one continuous data-driven model:</p>
+    <p>The score family is structured in two tiers — two primary knowledge-driven scores designed for clinical use, and three sensitivity models for methods comparison:</p>
+    <h3 class="muted" style="margin-top:24px;">Primary</h3>
     <div class="model-cards">
       <div class="model-card t-blue">
-        <h4>Model 1 — Full (8 pts)</h4>
-        <p>Seven variables including anticoagulation, focal deficit, platelets, antiplatelet therapy, and anterior + posterior embolization. <b>AUC 0.69</b> (optimism-corrected). Recommended cutoff ≥ 5 (10.4% vs 38.0% rescue, 3.7-fold gap).</p>
-      </div>
-      <div class="model-card t-purple">
-        <h4>Model 3 (6 pts)</h4>
-        <p>Five variables — keeps platelets, antiplatelet, and focal deficit; drops anticoagulation and procedural plan. Age stratified at <b>&gt;85</b> instead of <b>&gt;80</b>. <b>AUC 0.68</b>. Recommended cutoff ≥ 4.</p>
+        <h4>Model 1 — Full (7 pts)</h4>
+        <p>Six variables: age, SDH volume ≥100 mL, anticoagulation, platelets &lt;150 ×10⁹/L, antiplatelet therapy, and anterior + posterior embolization. <b>AUC 0.70</b> (optimism-corrected). Recommended cutoff ≥ 4 (8.6% vs 36.5% rescue, 4.2-fold gap).</p>
       </div>
       <div class="model-card t-gold">
-        <h4>Model 2 — Simple (5 pts)</h4>
-        <p>Four variables: age, SDH volume, anticoagulation, focal deficit. No laboratory values, no procedural plan needed. <b>AUC 0.62</b>. Designed for triage where lab and procedural data are unavailable.</p>
+        <h4>Model 2 — Simple (4 pts)</h4>
+        <p>Three variables: age, SDH volume, anticoagulation. No laboratory values or procedural plan needed. <b>AUC 0.64</b>. Designed for triage where lab and procedural data are unavailable.</p>
+      </div>
+    </div>
+    <h3 class="muted" style="margin-top:32px;">Sensitivity</h3>
+    <div class="model-cards">
+      <div class="model-card t-purple">
+        <h4>Model 3 (5 pts)</h4>
+        <p>Co-author parallel derivation. Four variables — age (cutoff &gt;85), SDH volume, platelets, antiplatelet. <b>AUC 0.70</b>. Useful when the procedural plan is not yet decided.</p>
       </div>
       <div class="model-card t-green">
         <h4>Model 4 — Data-driven</h4>
-        <p>Lasso-selected continuous logistic model (7 predictors): age, platelets, hypertension, antiplatelet, gait, anterior + posterior, SDH volume ≥100 mL. <b>5×10 CV AUC 0.67</b> (95% CI 0.58–0.76). Sensitivity benchmark — confirms the integer scores are not sacrificing discrimination.</p>
+        <p>L1-penalized (lasso) logistic regression on the full 25-variable candidate space, capped at the EPV-5 maximum of 7 predictors. Lasso selected age, platelets, hypertension, antiplatelet, and SDH volume ≥100 mL. <b>5×10 CV AUC 0.66</b> (95% CI 0.56–0.75). Class-imbalance sensitivity (none / class_weight=balanced / SMOTE) gave overlapping AUCs (0.65–0.67), confirming the small event count drives the ceiling rather than imbalance per se.</p>
+      </div>
+      <div class="model-card t-purple">
+        <h4>Focal-deficit variants</h4>
+        <p>Toggle "Sensitivity sub-analysis: include focal deficit" above to switch to the focal-included Model 1, 2, or 3. After a data-coding correction (prevalence 26.2% → 59.8%), focal deficit was non-significant in multivariable analysis (M1 adjusted OR 0.80, P=0.58). AUCs differ by &lt;0.02 from primary; the variable was excluded from primary scores for parsimony.</p>
       </div>
     </div>
-    <p>All integer models are calibrated across deciles of predicted probability (Hosmer–Lemeshow P > 0.5), so the absolute risk numbers can be used directly. The integer scores match the data-driven Model 4 and outperform random forest, gradient boosting, and XGBoost trained on the same inputs at this event count (CV-AUC 0.57–0.61 for ML).</p>
-    <p class="muted"><b>Note (May 2026):</b> the focal-deficit variable was re-included after a coding correction in the source data raised its prevalence from 26.2% to 59.8%, in line with published MMA-embolization series.</p>
+    <p style="margin-top:24px;">All primary models are calibrated across deciles of predicted probability (Hosmer–Lemeshow P &gt; 0.5), so the absolute risk numbers can be used directly. The integer scores match the data-driven Model 4 and outperform random forest, gradient boosting, and XGBoost trained on the same inputs at this event count (CV-AUC 0.57–0.65 for ML).</p>
   </div>
 </section>
 
@@ -277,7 +288,7 @@
     </header>
     <p>The accompanying manuscript is in preparation. Until publication, please cite the calculator as:</p>
     <blockquote class="cite">
-      MMA Embolization Rescue Risk Calculator (v3). Available at:
+      MMA Embolization Rescue Risk Calculator (v4). Available at:
       <a href="https://nielspac177.github.io/mmae-rescue-score/">https://nielspac177.github.io/mmae-rescue-score/</a>.
       Source code: <a href="https://github.com/nielspac177/mmae-rescue-score-code">github.com/nielspac177/mmae-rescue-score-code</a>.
     </blockquote>

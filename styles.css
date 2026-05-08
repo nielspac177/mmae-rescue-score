@@ -253,6 +253,22 @@ p { margin: 0 0 12px; }
   color: #fff;
 }
 .model-toggle label:has(input:checked) b { color: #fff; }
+.model-toggle label em { font-style: italic; opacity: 0.75; font-size: 11px; }
+
+.focal-sens {
+  margin: 8px 0 16px;
+  padding: 8px 12px;
+  background: var(--pale, #F5F2EA);
+  border-left: 3px solid var(--gold, #B98538);
+  font-size: 13px;
+  color: #444;
+}
+.focal-sens .check-inline {
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  cursor: pointer;
+}
 
 /* ============ Calculator grid ============ */
 .calc-grid {
