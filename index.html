@@ -275,6 +275,10 @@
         <h4>Focal-deficit variants</h4>
         <p>Toggle "Sensitivity sub-analysis: include focal deficit" above to switch to the focal-included Model 1, 2, or 3. After a data-coding correction (prevalence 26.2% → 59.8%), focal deficit was non-significant in multivariable analysis (M1 adjusted OR 0.80, P=0.58). AUCs differ by &lt;0.02 from primary; the variable was excluded from primary scores for parsimony.</p>
       </div>
+      <div class="model-card t-green">
+        <h4>Model 5 — Enhanced sensitivity bundle</h4>
+        <p>Methodological-stress sensitivity for Model 4. Bundles seven enhancements: restricted cubic splines on continuous predictors, prespecified clinical interactions, Optuna-tuned elastic-net, stacked ensemble (logistic + GBM), Bayesian logistic regression with informative priors anchored to published MMA series, MICE imputation for missing SDH volumes, and a richer continuous-feature set. <b>Composite CV-AUC 0.63 (0.52–0.74); Bayesian-with-priors variant CV-AUC 0.67 (0.57–0.77).</b> None of the enhancements moved AUC outside the Model-4 confidence interval — confirming that the small event count (n=36) is the binding constraint, not method choice. Reported as text-only sensitivity; not used clinically.</p>
+      </div>
     </div>
     <p style="margin-top:24px;">All primary models are calibrated across deciles of predicted probability (Hosmer–Lemeshow P &gt; 0.5), so the absolute risk numbers can be used directly. The integer scores match the data-driven Model 4 and outperform random forest, gradient boosting, and XGBoost trained on the same inputs at this event count (CV-AUC 0.57–0.65 for ML).</p>
   </div>
